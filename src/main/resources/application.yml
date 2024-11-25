@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: review-service
+  datasource:
+    url: ${REVIEW_DB_POSTGRES_URL}
+    username: ${REVIEW_DB_POSTGRES_USER}
+    password: ${REVIEW_DB_POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+
+server:
+  port: 8083
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
