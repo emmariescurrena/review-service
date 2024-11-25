@@ -1,0 +1,23 @@
+services:
+  review-service:
+    build:
+      context: .
+    env_file: .env
+    depends_on:
+      - review-service-db
+    ports:
+      - 8083:8083
+
+  review-service-db:
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_DB=${REVIEW_DB_POSTGRES_DB_NAME}
+      - POSTGRES_USER=${REVIEW_DB_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${REVIEW_DB_POSTGRES_PASSWORD}
+    ports:
+      - 5434:5432
+    volumes:
+      - review-db-data:/var/lib/postgresql/data
+
+volumes:
+  review-db-data:
