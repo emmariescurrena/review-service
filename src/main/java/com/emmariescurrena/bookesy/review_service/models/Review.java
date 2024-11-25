@@ -10,13 +10,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "REVIEWS")
+@Table(name = "REVIEWS", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"userId", "bookId"})
+})
 public class Review {
     
     @Id
@@ -24,7 +30,7 @@ public class Review {
     private Long id;
 
     @Column(nullable = false)
-    @NotEmpty(message = "The user id is required")
+    @NotNull(message = "The user id is required")
     private Long userId;
 
     @Column(nullable = false)
@@ -36,7 +42,8 @@ public class Review {
     private String text;
 
     @Column(nullable = false)
-    @Size(min = 1, max = 10, message = "The rating must be between 1 and 10")
+    @Min(value = 1, message = "The rating must be equal or higher than 1")
+    @Max(value = 10, message = "The rating must be equal or lower than 10")
     private Integer rating;
 
     @Column(name = "creation_date", updatable = false)
