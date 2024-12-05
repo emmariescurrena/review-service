@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import com.emmariescurrena.bookesy.review_service.models.Review;
 import com.emmariescurrena.bookesy.review_service.services.ReviewService;
 
 import jakarta.validation.Valid;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
@@ -40,5 +42,19 @@ public class ReviewController {
         return reviewService.getReviewById(reviewId);
     }
     
+    @GetMapping("/book-id/{bookId}")
+    public Flux<Review> getReviewByBookId(@PathVariable String bookId) {
+        return reviewService.getReviewsByBookId(bookId);
+    }
+
+    @GetMapping("/user-id/{userId}")
+    public Flux<Review> getReviewByUserId(@PathVariable Long userId) {
+        return reviewService.getReviewsByUserId(userId);
+    }
+
+    @GetMapping("/book-and-user-id")
+    public Mono<Optional<Review>> getReviewByReviewId(@RequestParam String bookId, @RequestParam Long userId) {
+        return reviewService.getReviewByBookIdAndUserId(bookId, userId);
+    }
 
 }
