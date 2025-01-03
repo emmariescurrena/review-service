@@ -9,7 +9,7 @@ services:
       - 8083:8083
 
   review-service-db:
-    image: "postgres:latest"
+    image: postgres:17.0
     environment:
       - POSTGRES_DB=${REVIEW_DB_POSTGRES_DB_NAME}
       - POSTGRES_USER=${REVIEW_DB_POSTGRES_USER}
