@@ -1,14 +1,27 @@
 spring:
   application:
     name: review-service
+  main:
+    web-application-type: reactive
   datasource:
-    url: ${REVIEW_DB_POSTGRES_URL}
+    url: ${REVIEW_DB_POSTGRES_JDBC_URL}
     username: ${REVIEW_DB_POSTGRES_USER}
     password: ${REVIEW_DB_POSTGRES_PASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: create
-    open-in-view: false
+  r2dbc:
+    url: ${REVIEW_DB_POSTGRES_R2DBC_URL}
+    username: ${REVIEW_DB_POSTGRES_USER}
+    password: ${REVIEW_DB_POSTGRES_PASSWORD}
+  data:
+    r2dbc:
+      repositories:
+        enabled: true
+  flyway:
+    enabled: true
+    url: ${REVIEW_DB_POSTGRES_JDBC_URL}
+    user: ${REVIEW_DB_POSTGRES_USER}
+    password: ${REVIEW_DB_POSTGRES_PASSWORD}
+    locations: classpath:db/migration
+    baseline-on-migrate: true
 
 server:
   port: 8083

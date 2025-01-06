@@ -1,7 +1,5 @@
 package com.emmariescurrena.bookesy.review_service.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +36,7 @@ public class ReviewController {
     }
 
     @GetMapping("/review-id/{reviewId}")
-    public Mono<Optional<Review>> getReviewByReviewId(@PathVariable Long reviewId) {
+    public Mono<Review> getReviewByReviewId(@PathVariable Long reviewId) {
         return reviewService.getReviewById(reviewId);
     }
     
@@ -53,7 +51,7 @@ public class ReviewController {
     }
 
     @GetMapping("/book-and-user-id")
-    public Mono<Optional<Review>> getReviewByReviewId(@RequestParam String bookId, @RequestParam Long userId) {
+    public Mono<Review> getReviewByReviewId(@RequestParam String bookId, @RequestParam Long userId) {
         return reviewService.getReviewByBookIdAndUserId(bookId, userId);
     }
 

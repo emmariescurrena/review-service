@@ -1,16 +1,13 @@
 package com.emmariescurrena.bookesy.review_service.models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,34 +17,31 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "REVIEWS", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"userId", "bookId"})
-})
+@Table("reviews")
 public class Review {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column("user_id")
     @NotNull(message = "The user id is required")
     private Long userId;
 
-    @Column(nullable = false)
+    @Column("book_id")
     @NotEmpty(message = "The book id is required")
     private String bookId;
 
-    @Column(nullable = false)
+    @Column("text")
     @Size(min = 50, max = 5000, message = "The length of text must be between 50 and 5000 characters")
     private String text;
 
-    @Column(nullable = false)
+    @Column("rating")
     @Min(value = 1, message = "The rating must be equal or higher than 1")
     @Max(value = 10, message = "The rating must be equal or lower than 10")
     private Integer rating;
 
-    @Column(name = "creation_date", updatable = false)
-    @CreationTimestamp
-    private Date creationDate;
+    @Column("creation_date")
+    @CreatedDate
+    private LocalDateTime creationDate;
 
 }
