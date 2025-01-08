@@ -37,7 +37,7 @@ public class Review {
 
     @Column("rating")
     @Min(value = 1, message = "The rating must be equal or higher than 1")
-    @Max(value = 10, message = "The rating must be equal or lower than 10")
+    @Max(value = 5, message = "The rating must be equal or lower than 5")
     private Integer rating;
 
     @Column("creation_date")
